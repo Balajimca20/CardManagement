@@ -80,26 +80,29 @@ fun AllCardScreen(uiState: CardDetailState) {
         color = colorResource(id = R.color.layout_bg)
     ) {
         Column {
-            AllCardItem(cardListItems = uiState.cardItem ?: listOf())
+            LazyColumn {
+                itemsIndexed(uiState.cardItem ?: listOf()) { index, item ->
+                    AllCardItem(cardItem = item, index = index)
+                }
+            }
         }
     }
 }
 
 @Composable
-fun AllCardItem(cardListItems: List<CardListItem>) {
-    LazyColumn {
-        itemsIndexed(cardListItems) { index, item ->
-            CardItem(
-                index = index,
-                cardName = item.cardName,
-                cardNumber = item.cardNumber,
-                cardType = item.cardType.valueOrDefault(),
-                cardExpireDate = item.cardExpireDate,
-                cardCategory = item.cardCategory.valueOrDefault(),
-                holderName = item.holderName.valueOrDefault(),
-                onClickCardItem = {},
-            )
+fun AllCardItem(cardItem: CardListItem, index: Int) {
 
-        }
-    }
+    CardItem(
+        index = index,
+        cardName = cardItem.cardName,
+        cardNumber = cardItem.cardNumber,
+        cardType = cardItem.cardType.valueOrDefault(),
+        cardExpireDate = cardItem.cardExpireDate,
+        cardCategory = cardItem.cardCategory.valueOrDefault(),
+        holderName = cardItem.holderName.valueOrDefault(),
+        onClickCardItem = {},
+    )
+
 }
+
+

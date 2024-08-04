@@ -99,8 +99,10 @@ fun CardItemPreview() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DashboardCardItem(cardItem: List<CardListItem>?,
-                      onClickCardItem: (CardListItem?) -> Unit,) {
+fun DashboardCardItem(
+    cardItem: List<CardListItem>?,
+    onClickCardItem: (CardListItem?) -> Unit,
+) {
 
     val pagerState = rememberPagerState(pageCount = {
         cardItem?.size ?: 0
@@ -117,7 +119,7 @@ fun DashboardCardItem(cardItem: List<CardListItem>?,
             cardExpireDate = cardItem?.get(page)?.cardExpireDate ?: "",
             cardCategory = cardItem?.get(page)?.cardCategory ?: "",
             holderName = cardItem?.get(page)?.holderName ?: "",
-            onClickCardItem={onClickCardItem(cardItem?.get(page))},
+            onClickCardItem = { onClickCardItem(cardItem?.get(page)) },
         )
     }
 }
@@ -219,7 +221,7 @@ fun CardItem(
                     Image(
                         modifier = Modifier
                             .size(width = 32.dp, height = 16.dp),
-                        imageVector = if(cardCategory.equals(Constants.CardType.VISA.value,true))
+                        imageVector = if (cardCategory.equals(Constants.CardType.VISA.value, true))
                             ImageVector.vectorResource(id = R.drawable.ic_visa) else
                             ImageVector.vectorResource(id = R.drawable.ic_mastercard),
                         contentDescription = "visa",
@@ -478,7 +480,7 @@ fun CustomBottomAppBar(
     navController: NavHostController,
     state: MutableState<Boolean>,
     modifier: Modifier,
-    onClickAddNewCard:()->Unit,
+    onClickAddNewCard: () -> Unit,
 ) {
     Box(contentAlignment = Alignment.Center) {
         BottomAppBar(

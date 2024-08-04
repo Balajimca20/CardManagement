@@ -26,9 +26,8 @@ import co.yml.charts.ui.linechart.model.SelectionHighlightPopUp
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
 import com.example.animation.R
 import com.example.animation.commonutils.Constants
-import com.example.animation.commonutils.getMonthOnly
-import com.example.animation.commonutils.valueOrDefault
 import com.example.animation.data.model.CardTransaction
+import com.example.animation.ui.utils.getFilterData
 import com.example.animation.ui.utils.isNegative
 import com.example.animation.ui.utils.removeNegativeSign
 
@@ -142,9 +141,9 @@ fun LineChartScreen(selectChartType: String?, cardTransactionItem: List<CardTran
                     SelectionHighlightPopUp(
                         popUpLabel = { _, y ->
                             if (isNegative(y.toDouble()))
-                            "-$${removeNegativeSign(y.toDouble())}"
+                                "-$${removeNegativeSign(y.toDouble())}"
                             else
-                            "$${removeNegativeSign(y.toDouble())}"
+                                "$${removeNegativeSign(y.toDouble())}"
                         }
                     )
                 )
@@ -164,45 +163,5 @@ fun LineChartScreen(selectChartType: String?, cardTransactionItem: List<CardTran
 
 }
 
-fun getFilterData(
-    cardTransactionItem: List<CardTransaction>?,
-    selectChartType: String
-): List<ChartMapValue>? {
-    return when (selectChartType) {
-        Constants.ChartType.DAY.value -> {
-            cardTransactionItem?.groupBy { it.dateAndTime }
-                ?.mapValues { entry -> entry.value.sumOf { it.amount ?: 0.00 } }?.map {
-                    ChartMapValue(
-                        date = it.key.valueOrDefault(),
-                        total = it.value.toFloat()
-                    )
-                }
-        }
-
-        Constants.ChartType.MONTH.value -> {
-            cardTransactionItem?.groupBy { it.month }
-                ?.mapValues { entry -> entry.value.sumOf { it.amount ?: 0.00 } }?.map {
-                    ChartMapValue(
-                        date = getMonthOnly(it.key.valueOrDefault()),
-                        total = it.value.toFloat()
-                    )
-                }
-        }
-
-        Constants.ChartType.YEARLY.value -> {
-            cardTransactionItem?.groupBy { it.year }
-                ?.mapValues { entry -> entry.value.sumOf { it.amount ?: 0.00 } }?.map {
-                    ChartMapValue(
-                        date = it.key.valueOrDefault(),
-                        total = it.value.toFloat()
-                    )
-                }
-        }
-
-        else -> {
-            null
-        }
-    }
-}
 
 data class ChartMapValue(val date: String, val total: Float)

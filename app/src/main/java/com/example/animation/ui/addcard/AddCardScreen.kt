@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -40,17 +41,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.animation.R
 import com.example.animation.commonutils.Constants
 import com.example.animation.commonutils.valueOrDefault
-import com.example.animation.data.model.CardListItem
 import com.example.animation.ui.components.PlaceHolderContent
 import com.example.animation.ui.dashboard.CardDetailState
-import com.example.animation.ui.navigation.FrequentlyItem
+import com.example.animation.ui.utils.getKeyboardType
+import com.example.animation.ui.utils.getMaxChar
 import kotlinx.coroutines.launch
 
 
@@ -58,45 +58,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun AddCardScreenPreview() {
     AddCardScreen(
-        uiState = CardDetailState(
-            cardItem = arrayListOf(
-                CardListItem(
-                    cardName = "Dutch Bangla Bank",
-                    cardNumber = "1234567890123456",
-                    cardType = "Platinum Plus",
-                    cardExpireDate = "Exp 01/22",
-                    cardCategory = "VISA",
-                    holderName = "Sunny Aveiro"
-                ),
-                CardListItem(
-                    cardName = "Dutch Bangla Bank",
-                    cardNumber = "1234567890123456",
-                    cardType = "Platinum Plus",
-                    cardExpireDate = "Exp 01/22",
-                    cardCategory = "VISA",
-                    holderName = "Sunny Aveiro"
-                ),
-                CardListItem(
-                    cardName = "Dutch Bangla Bank",
-                    cardNumber = "1234567890123456",
-                    cardType = "Platinum Plus",
-                    cardExpireDate = "Exp 01/22",
-                    cardCategory = "VISA",
-                    holderName = "Sunny Aveiro"
-                )
-            ),
-            frequentlyItem = listOf(
-                FrequentlyItem.MobileRecharge,
-                FrequentlyItem.BillPayment,
-                FrequentlyItem.BankTransfer,
-                FrequentlyItem.RequestMoney,
-                FrequentlyItem.TransferHistory,
-            ),
-            serviceItem = listOf(
-                FrequentlyItem.OpenAccount,
-                FrequentlyItem.ManageCards,
-            )
-        ),
+        uiState = CardDetailState(),
         onEventClicked = {},
         onSave = {},
         onClose = {},
@@ -108,15 +70,15 @@ fun AddCardScreenPreview() {
 fun AddCardScreen(
     uiState: CardDetailState,
     onEventClicked: (CreateCardEvents) -> Unit,
-    onSave :()->Unit,
-    onClose :()->Unit,
+    onSave: () -> Unit,
+    onClose: () -> Unit,
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val status= stringResource(id = R.string.your_card_details_successfully_added)
+    val status = stringResource(id = R.string.your_card_details_successfully_added)
     LaunchedEffect(key1 = uiState.status) {
-        if (uiState.status==true){
+        if (uiState.status == true) {
             snackBarHostState.showSnackbar(status)
             onEventClicked(CreateCardEvents.OnStatus(status = false))
             onClose()
@@ -141,65 +103,71 @@ fun AddCardScreen(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_card_info),
                     contentDescription = ""
                 )
-                Spacer(modifier = Modifier.padding(8.dp))
-                CommonText(
-                    labelName = stringResource(id = R.string.cardholder_name),
-                    placeHolder = Constants.PlaceholderType.NAME.value,
-                    name = uiState.cardHolderName.valueOrDefault(),
-                    onValueChange = { item ->
-                        onEventClicked(CreateCardEvents.OnCardHolderName(name = item))
+                LazyColumn {
+                    item {
 
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                )
-                CommonText(
-                    labelName = stringResource(id = R.string.card_number),
-                    placeHolder = Constants.PlaceholderType.NUMBER.value,
-                    name = uiState.cardNumber.valueOrDefault(),
-                    onValueChange = { item ->
-                        onEventClicked(CreateCardEvents.OnCardNumber(number = item))
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
-                SingleChoiceDropDown(
-                    placeholder = stringResource(id = R.string.card_type),
-                    name = uiState.cardType,
-                    dropDownItem = uiState.cardTypeItem,
-                    onSingleSelection = { selectItem ->
-                        onEventClicked(CreateCardEvents.OnUpdateCardType(item = selectItem))
-                    },
-                )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    CommonText(
-                        labelName = stringResource(id = R.string.expiry),
-                        placeHolder = Constants.PlaceholderType.EXPIRY.value,
-                        name = uiState.cardExpiry.valueOrDefault(),
-                        onValueChange = { item ->
-                            onEventClicked(CreateCardEvents.OnCardExpiry(expiry = item))
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
+                        Spacer(modifier = Modifier.padding(8.dp))
+                        CommonText(
+                            labelName = stringResource(id = R.string.cardholder_name),
+                            placeHolder = Constants.PlaceholderType.NAME.value,
+                            name = uiState.cardHolderName.valueOrDefault(),
+                            onValueChange = { item ->
+                                onEventClicked(CreateCardEvents.OnCardHolderName(name = item))
 
-                    )
-                    CommonText(
-                        labelName = stringResource(id = R.string.cvv),
-                        placeHolder = Constants.PlaceholderType.CVV.value,
-                        name = uiState.cardCVVNumber.valueOrDefault(),
-                        onValueChange = { item ->
-                            onEventClicked(CreateCardEvents.OnCardCVV(number = item))
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
+                            },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                        CommonText(
+                            labelName = stringResource(id = R.string.card_number),
+                            placeHolder = Constants.PlaceholderType.NUMBER.value,
+                            name = uiState.cardNumber.valueOrDefault(),
+                            onValueChange = { item ->
+                                onEventClicked(CreateCardEvents.OnCardNumber(number = item))
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                        Spacer(modifier = Modifier.padding(4.dp))
+                        SingleChoiceDropDown(
+                            placeholder = stringResource(id = R.string.card_type),
+                            name = uiState.cardType,
+                            dropDownItem = uiState.cardTypeItem,
+                            onSingleSelection = { selectItem ->
+                                onEventClicked(CreateCardEvents.OnUpdateCardType(item = selectItem))
+                            },
+                        )
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            CommonText(
+                                labelName = stringResource(id = R.string.expiry),
+                                placeHolder = Constants.PlaceholderType.EXPIRY.value,
+                                name = uiState.cardExpiry.valueOrDefault(),
+                                onValueChange = { item ->
+                                    onEventClicked(CreateCardEvents.OnCardExpiry(expiry = item))
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f)
 
-                    )
+                            )
+                            CommonText(
+                                labelName = stringResource(id = R.string.cvv),
+                                placeHolder = Constants.PlaceholderType.CVV.value,
+                                name = uiState.cardCVVNumber.valueOrDefault(),
+                                onValueChange = { item ->
+                                    onEventClicked(CreateCardEvents.OnCardCVV(number = item))
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(1f)
+
+                            )
+                        }
+                    }
                 }
+
 
             }
         },
@@ -214,7 +182,7 @@ fun AddCardScreen(
                         scope.launch {
                             snackBarHostState.showSnackbar(context.getString(validationContent))
                         }
-                    }else {
+                    } else {
                         onSave()
                     }
                 },
@@ -369,24 +337,6 @@ fun SingleChoiceDropDown(
     }
 }
 
-fun getMaxChar(placeHolder: String): Int {
-    return when (placeHolder) {
-        Constants.PlaceholderType.NAME.value -> 20
-        Constants.PlaceholderType.NUMBER.value -> 16
-        Constants.PlaceholderType.EXPIRY.value -> 5
-        Constants.PlaceholderType.CVV.value -> 3
-        else -> 26
-    }
-}
-
-fun getKeyboardType(placeHolder: String): KeyboardType {
-    return when (placeHolder) {
-        Constants.PlaceholderType.NAME.value -> KeyboardType.Text
-        Constants.PlaceholderType.NUMBER.value -> KeyboardType.Phone
-        Constants.PlaceholderType.CVV.value -> KeyboardType.Phone
-        else -> KeyboardType.Text
-    }
-}
 
 data class PopupFilterModel(
     val title: String? = null,

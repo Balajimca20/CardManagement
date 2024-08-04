@@ -72,7 +72,7 @@ fun CardDetailScreenPreview() {
                     type = "debit",
                     amount = -45.67
                 ),
-            )
+            ),
         )
     )
 }
@@ -83,13 +83,11 @@ fun CardDetailScreen(
 ) {
     var selectChartType by rememberSaveable { mutableStateOf(Constants.ChartType.DAY.value) }
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = colorResource(id = R.color.layout_bg)
+        modifier = Modifier.fillMaxSize(), color = colorResource(id = R.color.layout_bg)
     ) {
         if (uiState.isLoading == true) {
             Box(
-                Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                Modifier.fillMaxSize(), contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(color = colorResource(id = R.color.primary))
             }
@@ -102,19 +100,23 @@ fun CardDetailScreen(
                     ChartScheduleType(
                         onClickChartType = {
                             selectChartType = it
-                        },
-                        selectChartType = selectChartType
+                        }, selectChartType = selectChartType
                     )
 
-                    Spacer(modifier = Modifier.padding(4.dp))
+                    LazyColumn {
+                        item {
+                            Spacer(modifier = Modifier.padding(4.dp))
 
-                    LineChartScreen(selectChartType, uiState.cardTransactionItem)
+                            LineChartScreen(selectChartType, uiState.cardTransactionItem)
 
-                    Spacer(modifier = Modifier.padding(4.dp))
+                            Spacer(modifier = Modifier.padding(4.dp))
 
-                    SubTitleContent(title = stringResource(id = R.string.transfer_history_str))
-
-                    AllCardItem(transactionList = uiState.cardTransactionItem ?: listOf())
+                            SubTitleContent(title = stringResource(id = R.string.transfer_history_str))
+                        }
+                        items(uiState.cardTransactionItem ?: listOf()) { item ->
+                            AllCardItem(item = item)
+                        }
+                    }
                 }
             }
         }
@@ -172,7 +174,7 @@ fun CardSummaryItem(
 @Preview(showBackground = true)
 @Composable
 fun AllCardItemPreview() {
-    val tempITem = listOf(
+    AllCardItem(
         CardTransaction(
             transaction_id = "txn001",
             date = "2024-07-01T10:15:30Z",
@@ -182,73 +184,65 @@ fun AllCardItemPreview() {
             amount = -45.67
         )
     )
-    AllCardItem(tempITem)
 }
 
 @Composable
-fun AllCardItem(transactionList: List<CardTransaction>) {
-    LazyColumn {
-        items(transactionList) { item ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 1.dp)
-                    .background(color = colorResource(id = R.color.white))
-                    .padding(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    modifier = Modifier
-                        .background(
-                            color = colorResource(id = R.color.credit_bg),
-                            shape = RoundedCornerShape(4.dp)
-                        )
-                        .size(48.dp)
-                        .padding(12.dp),
-                    imageVector = if (item.type == Constants.TransactionType.DEBIT.value)
-                        Icons.AutoMirrored.Filled.ArrowForward else
-                        Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "debit",
-                    tint = if (item.type == Constants.TransactionType.DEBIT.value)
-                        colorResource(id = R.color.debit) else
-                        colorResource(id = R.color.credit),
-                )
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(horizontal = 16.dp)
-                ) {
-                    Text(
-                        text = item.merchant ?: "",
-                        color = colorResource(id = R.color.credit_text_clg),
-                    )
-                    Text(
-                        text = getDateAndTime(item.date),
-                        color = colorResource(id = R.color.unselect),
-                    )
-                }
+fun AllCardItem(item: CardTransaction) {
 
-                Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = if (isNegative(item.amount ?: 0.00)) stringResource(
-                        id = R.string.current_balance_debit,
-                        removeNegativeSign(item.amount ?: 0.00)
-                    )
-                    else stringResource(
-                        id = R.string.current_balance_credit,
-                        removeNegativeSign(item.amount ?: 0.00)
-                    ),
-                    color = if (item.type == Constants.TransactionType.DEBIT.value)
-                        colorResource(id = R.color.credit_text_clg) else
-                        colorResource(id = R.color.primary),
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp, vertical = 1.dp)
+            .background(color = colorResource(id = R.color.white))
+            .padding(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            modifier = Modifier
+                .background(
+                    color = colorResource(id = R.color.credit_bg), shape = RoundedCornerShape(4.dp)
                 )
-
-            }
+                .size(48.dp)
+                .padding(12.dp),
+            imageVector = if (item.type == Constants.TransactionType.DEBIT.value) Icons.AutoMirrored.Filled.ArrowForward else Icons.AutoMirrored.Filled.ArrowBack,
+            contentDescription = "debit",
+            tint = if (item.type == Constants.TransactionType.DEBIT.value) colorResource(id = R.color.debit) else colorResource(
+                id = R.color.credit
+            ),
+        )
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .padding(horizontal = 16.dp)
+        ) {
+            Text(
+                text = item.merchant ?: "",
+                color = colorResource(id = R.color.credit_text_clg),
+            )
+            Text(
+                text = getDateAndTime(item.date),
+                color = colorResource(id = R.color.unselect),
+            )
         }
+
+        Spacer(modifier = Modifier.padding(4.dp))
+        Text(
+            text = if (isNegative(item.amount ?: 0.00)) stringResource(
+                id = R.string.current_balance_debit, removeNegativeSign(item.amount ?: 0.00)
+            )
+            else stringResource(
+                id = R.string.current_balance_credit, removeNegativeSign(item.amount ?: 0.00)
+            ),
+            color = if (item.type == Constants.TransactionType.DEBIT.value) colorResource(id = R.color.credit_text_clg) else colorResource(
+                id = R.color.primary
+            ),
+            fontWeight = FontWeight.Bold,
+            fontSize = 16.sp
+        )
+
     }
 }
+
 
 @Composable
 fun ChartScheduleType(
@@ -301,11 +295,9 @@ fun SingleChoiceButton(
     title: String,
 ) {
     Button(
-        modifier = modifier,
-        onClick = {
+        modifier = modifier, onClick = {
             onClickChartType(title)
-        },
-        colors = if (title == selectChartType) {
+        }, colors = if (title == selectChartType) {
             ButtonDefaults.buttonColors(
                 containerColor = colorResource(id = R.color.primary),
                 contentColor = colorResource(id = R.color.white)

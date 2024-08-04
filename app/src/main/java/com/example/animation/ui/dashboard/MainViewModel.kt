@@ -4,7 +4,6 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.animation.domain.network.apiutils.Resource
 import com.example.animation.commonutils.Constants
 import com.example.animation.commonutils.getDateOnly
 import com.example.animation.commonutils.getMonthAndYear
@@ -15,6 +14,7 @@ import com.example.animation.data.model.CardDetailResponse
 import com.example.animation.data.model.CardListItem
 import com.example.animation.data.model.CardTransaction
 import com.example.animation.data.repository.CardDetailsRepository
+import com.example.animation.domain.network.apiutils.Resource
 import com.example.animation.ui.addcard.CreateCardEvents
 import com.example.animation.ui.addcard.PopupFilterModel
 import com.example.animation.ui.navigation.FrequentlyItem
@@ -292,3 +292,5 @@ data class CardDetailState(
     val cardExpiry: String? = "",
     val cardCVVNumber: String? = "",
 )
+
+
