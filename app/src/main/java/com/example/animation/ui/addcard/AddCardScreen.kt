@@ -44,6 +44,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.text.isDigitsOnly
 import com.example.animation.R
 import com.example.animation.commonutils.Constants
 import com.example.animation.commonutils.valueOrDefault
@@ -237,7 +238,21 @@ fun CommonText(
             value = name,
             onValueChange = {
                 if (it.length <= getMaxChar(placeHolder)) {
-                    onValueChange(it)
+                    if (Constants.PlaceholderType.NUMBER.value == placeHolder ||
+                        Constants.PlaceholderType.EXPIRY.value == placeHolder ||
+                        Constants.PlaceholderType.CVV.value == placeHolder
+                    ) {
+                        if (Constants.PlaceholderType.EXPIRY.value == placeHolder && (it.isDigitsOnly() || it.contains("/"))
+                        ) {
+                            onValueChange(it)
+                        } else {
+                            if (it.isDigitsOnly())
+                                onValueChange(it)
+                        }
+
+                    } else {
+                        onValueChange(it)
+                    }
                 }
             },
             label = {
@@ -252,7 +267,8 @@ fun CommonText(
             ),
             keyboardOptions = KeyboardOptions(
                 keyboardType = getKeyboardType(placeHolder),
-                imeAction = ImeAction.Next
+                imeAction = if (Constants.PlaceholderType.CVV.value == placeHolder) ImeAction.Done
+                else ImeAction.Next
             ),
             singleLine = true,
         )
@@ -291,6 +307,13 @@ fun SingleChoiceDropDown(
                     .menuAnchor(),
                 value = title ?: "",
                 onValueChange = {},
+                placeholder = {
+                    Text(
+                        text = stringResource(id = R.string.choose_one),
+                        color = colorResource(id = R.color.unselect),
+                        fontSize = 14.sp,
+                    )
+                },
                 singleLine = true,
                 readOnly = true,
                 trailingIcon = {

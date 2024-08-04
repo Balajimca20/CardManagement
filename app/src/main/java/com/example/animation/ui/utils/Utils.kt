@@ -50,7 +50,7 @@ fun isNegative(number: Double): Boolean {
 
 @SuppressLint("DefaultLocale")
 fun removeNegativeSign(number: Double): String {
-    val formattedNumber= abs(number)
+    val formattedNumber = abs(number)
     return String.format("%.2f", formattedNumber)
 }
 
@@ -108,8 +108,9 @@ fun getMaxChar(placeHolder: String): Int {
 fun getKeyboardType(placeHolder: String): KeyboardType {
     return when (placeHolder) {
         Constants.PlaceholderType.NAME.value -> KeyboardType.Text
-        Constants.PlaceholderType.NUMBER.value -> KeyboardType.Phone
-        Constants.PlaceholderType.CVV.value -> KeyboardType.Phone
+        Constants.PlaceholderType.NUMBER.value -> KeyboardType.Number
+        Constants.PlaceholderType.CVV.value -> KeyboardType.Number
+        Constants.PlaceholderType.EXPIRY.value -> KeyboardType.Text
         else -> KeyboardType.Text
     }
 }
