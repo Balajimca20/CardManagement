@@ -1,4 +1,4 @@
-package com.example.animation.apiutils
+package com.example.animation.domain.network.apiutils
 
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName

@@ -31,6 +31,7 @@
     <color name="credit_bg">#F8F8F8</color>
     <color name="credit">#C4BBF6</color>
     <color name="credit_text_clg">#3E424D</color>
+    <color name="chart_clg">#FEFEFE</color>
     <color name="outer_line">#DEDCEA</color>
 
 </resources>

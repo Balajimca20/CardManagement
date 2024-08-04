@@ -2,8 +2,8 @@ package com.example.animation.data.repository
 
 
 import android.util.Log
-import com.example.animation.apiutils.BaseRepo
-import com.example.animation.apiutils.Resource
+import com.example.animation.domain.network.apiutils.BaseRepo
+import com.example.animation.domain.network.apiutils.Resource
 import com.example.animation.data.CardDetailsService
 import com.example.animation.data.dataBase.dao.LocalDataSource
 import com.example.animation.data.model.CardDetailResponse

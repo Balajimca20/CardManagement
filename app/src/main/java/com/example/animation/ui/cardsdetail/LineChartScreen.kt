@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import co.yml.charts.axis.AxisData
@@ -23,6 +24,7 @@ import co.yml.charts.ui.linechart.model.LineType
 import co.yml.charts.ui.linechart.model.SelectionHighlightPoint
 import co.yml.charts.ui.linechart.model.SelectionHighlightPopUp
 import co.yml.charts.ui.linechart.model.ShadowUnderLine
+import com.example.animation.R
 import com.example.animation.commonutils.Constants
 import com.example.animation.commonutils.getMonthOnly
 import com.example.animation.commonutils.valueOrDefault
@@ -119,14 +121,14 @@ fun LineChartScreen(selectChartType: String?, cardTransactionItem: List<CardTran
                 Line(
                     dataPoints = pointsData,
                     LineStyle(
-                        color = MaterialTheme.colorScheme.tertiary,
+                        color = colorResource(id = R.color.chart_line),
                         lineType = LineType.SmoothCurve(isDotted = false),
                     ),
                     IntersectionPoint(
                         color = MaterialTheme.colorScheme.tertiary
                     ),
                     SelectionHighlightPoint(
-                        color = MaterialTheme.colorScheme.primary
+                        color = colorResource(id = R.color.primary)
                     ),
                     ShadowUnderLine(
                         alpha = 0.5f,
@@ -148,10 +150,10 @@ fun LineChartScreen(selectChartType: String?, cardTransactionItem: List<CardTran
                 )
             ),
         ),
-        backgroundColor = MaterialTheme.colorScheme.surface,
+        backgroundColor = colorResource(id = R.color.chart_clg),
         xAxisData = xAxisData,
         yAxisData = yAxisData,
-        gridLines = GridLines(color = MaterialTheme.colorScheme.outlineVariant)
+        gridLines = GridLines(color = Color.Gray)
     )
     LineChart(
         modifier = Modifier

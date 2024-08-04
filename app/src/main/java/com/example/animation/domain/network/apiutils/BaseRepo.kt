@@ -1,4 +1,4 @@
-package com.example.animation.apiutils
+package com.example.animation.domain.network.apiutils
 
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers

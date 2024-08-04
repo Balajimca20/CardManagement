@@ -255,38 +255,41 @@ fun ChartScheduleType(
     onClickChartType: (String) -> Unit,
     selectChartType: String,
 ) {
-    Row(
+    Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .background(color = Color.White, shape = CircleShape),
-        horizontalArrangement = Arrangement.SpaceBetween
+            .padding(horizontal = 16.dp),
+        shape = CircleShape,
+        colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
-        SingleChoiceButton(
-            onClickChartType = onClickChartType,
-            selectChartType = selectChartType,
-            title = Constants.ChartType.DAY.value,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        )
-        SingleChoiceButton(
-            onClickChartType = onClickChartType,
-            selectChartType = selectChartType,
-            title = Constants.ChartType.MONTH.value,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        )
-        SingleChoiceButton(
-            onClickChartType = onClickChartType,
-            selectChartType = selectChartType,
-            title = Constants.ChartType.YEARLY.value,
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        )
-
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            SingleChoiceButton(
+                onClickChartType = onClickChartType,
+                selectChartType = selectChartType,
+                title = Constants.ChartType.DAY.value,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
+            SingleChoiceButton(
+                onClickChartType = onClickChartType,
+                selectChartType = selectChartType,
+                title = Constants.ChartType.MONTH.value,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
+            SingleChoiceButton(
+                onClickChartType = onClickChartType,
+                selectChartType = selectChartType,
+                title = Constants.ChartType.YEARLY.value,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            )
+        }
     }
 }
 

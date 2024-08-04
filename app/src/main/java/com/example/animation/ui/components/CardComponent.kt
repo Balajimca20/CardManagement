@@ -72,7 +72,7 @@ fun CardItemPreview() {
                 cardNumber = "1234567890123456",
                 cardType = "Platinum Plus",
                 cardExpireDate = "Exp 01/22",
-                cardCategory = "VISA",
+                cardCategory = Constants.CardType.MASTERCARD.value,
                 holderName = "Sunny Aveiro"
             ),
             CardListItem(
@@ -80,7 +80,7 @@ fun CardItemPreview() {
                 cardNumber = "1234567890123456",
                 cardType = "Platinum Plus",
                 cardExpireDate = "Exp 01/22",
-                cardCategory = "VISA",
+                cardCategory = Constants.CardType.VISA.value,
                 holderName = "Sunny Aveiro"
             ),
             CardListItem(
@@ -88,7 +88,7 @@ fun CardItemPreview() {
                 cardNumber = "1234567890123456",
                 cardType = "Platinum Plus",
                 cardExpireDate = "Exp 01/22",
-                cardCategory = "VISA",
+                cardCategory = Constants.CardType.VISA.value,
                 holderName = "Sunny Aveiro"
             )
         ),
@@ -215,13 +215,14 @@ fun CardItem(
                         color = Color.White,
                         fontWeight = FontWeight.Medium
                     )
-                    if(cardCategory.equals(Constants.CardType.VISA.value,true))
-                    Icon(
+
+                    Image(
                         modifier = Modifier
                             .size(width = 32.dp, height = 16.dp),
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_visa),
+                        imageVector = if(cardCategory.equals(Constants.CardType.VISA.value,true))
+                            ImageVector.vectorResource(id = R.drawable.ic_visa) else
+                            ImageVector.vectorResource(id = R.drawable.ic_mastercard),
                         contentDescription = "visa",
-                        tint = colorResource(id = R.color.white)
                     )
 
 

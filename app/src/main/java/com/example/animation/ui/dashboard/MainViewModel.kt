@@ -4,7 +4,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.animation.apiutils.Resource
+import com.example.animation.domain.network.apiutils.Resource
 import com.example.animation.commonutils.Constants
 import com.example.animation.commonutils.getDateOnly
 import com.example.animation.commonutils.getMonthAndYear
@@ -33,27 +33,28 @@ class MainViewModel(
             cardName = "Dutch Bangla Bank",
             cardNumber = "1234567890123456",
             cardType = "Platinum Plus",
+            cardExpireDate = "Exp 01/23",
+            cardCategory = Constants.CardType.VISA.value,
+            holderName = "Aveiro"
+        ),
+        CardListItem(
+            cardName = "Dutch Bangla Bank",
+            cardNumber = "9876543210654321",
+            cardType = "Platinum Plus",
             cardExpireDate = "Exp 01/22",
-            cardCategory = "VISA",
+            cardCategory = Constants.CardType.MASTERCARD.value,
             holderName = "Sunny Aveiro"
         ),
         CardListItem(
             cardName = "Dutch Bangla Bank",
-            cardNumber = "1234567890123456",
-            cardType = "Platinum Plus",
-            cardExpireDate = "Exp 01/22",
-            cardCategory = "VISA",
-            holderName = "Sunny Aveiro"
-        ),
-        CardListItem(
-            cardName = "Dutch Bangla Bank",
-            cardNumber = "1234567890123456",
-            cardType = "Platinum Plus",
-            cardExpireDate = "Exp 01/22",
-            cardCategory = "VISA",
-            holderName = "Sunny Aveiro"
+            cardNumber = "9876543212345565",
+            cardType = "Platinum",
+            cardExpireDate = "Exp 01/25",
+            cardCategory = Constants.CardType.VISA.value,
+            holderName = "Sunny "
         )
     )
+
     private val frequentlyItem = listOf(
         FrequentlyItem.MobileRecharge,
         FrequentlyItem.BillPayment,
@@ -99,6 +100,7 @@ class MainViewModel(
             amount = -45.67
         ),
     )
+
     private val cardTypeItem = listOf(
         PopupFilterModel(
             title = Constants.CardType.VISA.value,
@@ -116,7 +118,7 @@ class MainViewModel(
             cardItem = cardItem,
             frequentlyItem = frequentlyItem,
             serviceItem = serviceItem,
-            cardTransactionItem = cardTransactionItem.map { item->
+            cardTransactionItem = cardTransactionItem.map { item ->
                 CardTransaction(
                     transaction_id = item.transaction_id,
                     date = item.date,
@@ -152,7 +154,7 @@ class MainViewModel(
                         viewModelState.update {
                             it.copy(
                                 isLoading = false,
-                                cardTransactionItem = response.data?.transactions?.map { item->
+                                cardTransactionItem = response.data?.transactions?.map { item ->
                                     CardTransaction(
                                         transaction_id = item.transaction_id,
                                         date = item.date,
@@ -175,7 +177,7 @@ class MainViewModel(
     }
 
     fun processIntent(intent: Intent?) {
-        Log.e("processIntent","msg: ${intent.toJson()}")
+        Log.e("processIntent", "msg: ${intent.toJson()}")
         getCardTransaction()
         getCardDetail()
     }
@@ -290,10 +292,3 @@ data class CardDetailState(
     val cardExpiry: String? = "",
     val cardCVVNumber: String? = "",
 )
-
-/*data class PopupFilterModel(
-    val title: String? = null,
-    val subTitle: String? = null,
-    var isSelect: Boolean? = null,
-    var status: Boolean? = null,
-)*/

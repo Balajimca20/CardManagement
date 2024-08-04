@@ -1,4 +1,4 @@
-package com.example.animation.apiutils
+package com.example.animation.domain.network.apiutils
 
 sealed class Resource<T>(
     val data : T? = null,
