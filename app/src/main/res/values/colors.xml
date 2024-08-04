@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#608DEA</color>
+    <color name="unselect">#D2D7E1</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="layout_bg">#F7F7F7</color>
+    <color name="text_color">#636B7B</color>
+    <color name="recharge_light">#EBFAF5</color>
+    <color name="recharge_dark">#3AD69E</color>
+    <color name="bill_light">#FFF0F0</color>
+    <color name="bill_dark">#FF6D64</color>
+    <color name="transfer_light">#FFFAEB</color>
+    <color name="transfer_dark">#FFC332</color>
+    <color name="request_light">#EBF0FA</color>
+    <color name="request_dark">#8089FC</color>
+    <color name="history_light">#FAEBFA</color>
+    <color name="history_dark">#80BA1EBA</color>
+    <color name="visa_bg">#323131</color>
+    <color name="visa_start">#232323</color>
+    <color name="visa_text_clg">#5A5A5A</color>
+    <color name="card_summary">#E7F3FF</color>
+    <color name="current_balance">#AFBFEE</color>
+    <color name="chart_line">#5455E1</color>
+    <color name="debit">#F98E96</color>
+    <color name="credit_bg">#F8F8F8</color>
+    <color name="credit">#C4BBF6</color>
+    <color name="credit_text_clg">#3E424D</color>
+    <color name="outer_line">#DEDCEA</color>
+
+</resources>

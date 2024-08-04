@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Animation</string>
+    <string name="visa">VISA</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="other">other</string>
+    <string name="all_card">All Cards</string>
+    <string name="profile">Profile</string>
+    <string name="card_summary">Card Summary</string>
+    <string name="card_detail">Card Details</string>
+    <string name="add_card">Add Card</string>
+    <string name="mobile_recharge">Mobile\nRecharge</string>
+    <string name="bill_payment">Bill\nPayment</string>
+    <string name="bank_transfer">Bank\nTransfer</string>
+    <string name="request_money">Request\nMoney</string>
+    <string name="transfer_history">Transfer\nHistory</string>
+    <string name="transfer_history_str">Transactions History</string>
+    <string name="frequently_used">Frequently Used\n</string>
+    <string name="service">Service</string>
+    <string name="open_account">Open Account</string>
+    <string name="manage_cards">Manage Cards</string>
+    <string name="current_balance">Current Balance</string>
+    <string name="current_balance_dollar">$%s</string>
+    <string name="current_balance_credit">+$%s</string>
+    <string name="current_balance_debit">-$%s</string>
+    <string name="cardholder_name">Cardholder Name</string>
+    <string name="card_number">Card Number</string>
+    <string name="expiry">Expiry</string>
+    <string name="card_type">Card Type</string>
+    <string name="cvv">CVV</string>
+    <string name="choose_one">Choose one</string>
+    <string name="choose_one_card_type">Choose a card type.</string>
+    <string name="enter_holder_Name">Enter Card Holder Name</string>
+    <string name="enter_card_number">Enter a card number with exactly 16 digits.</string>
+    <string name="enter_expiry">Enter expiry month and Year.</string>
+    <string name="enter_cvv_number">Enter a card CVV with exactly 3 digits.</string>
+    <string name="your_card_details_successfully_added">Your card details successfully added.</string>
+
+</resources>
